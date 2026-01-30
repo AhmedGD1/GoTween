@@ -123,6 +123,11 @@ sprite.GoProperty("rotation")
     .Start();
 ```
 
+## Relative Tweens
+```csharp
+GoTween.Move(sprite, Vector2.Right * 100f, duration: 1f, b => b.AsRelative());
+```
+
 ## Helper Methods
 
 ### Fade
@@ -158,9 +163,9 @@ GoTween.GoScaleY(node, 0.5f, 1f);
 ### Rotation
 
 ```csharp
-GoTween.Rotate2D(node2D, 360f, 2f);  // Degrees
-GoTween.Rotate3D(node3D, new Vector3(0, 180, 0), 2f);
-GoTween.RotateX(node3D, 90f, 1f);
+GoTween.GoRotate2D(node2D, 360f, 2f);  // Degrees
+GoTween.GoRotate3D(node3D, new Vector3(0, 180, 0), 2f);
+GoTween.GoRotateX(node3D, 90f, 1f);
 ```
 
 ### Color
