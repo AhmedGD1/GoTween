@@ -182,10 +182,6 @@ GoTween.GoShakeRotation(node2D, intensityDegrees: 15f, duration: 0.4f);
 // Blink effect
 GoTween.GoBlink(sprite, times: 5, duration: 2f);
 
-// Punch effects
-GoTween.GoPunchScale(node, strength: 1.5f, duration: 0.5f);
-GoTween.GoPunchPosition(node2D, strength: new Vector2(20, 0), duration: 0.3f);
-GoTween.GoPunchRotation(node2D, strength: 45f, duration: 0.4f);
 ```
 
 ### UI
