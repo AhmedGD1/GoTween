@@ -1,9 +1,9 @@
 MIT License with Attribution Requirements
 
-Copyright (c) 2026 [Your Name/Organization]
+Copyright (c) 2026 [Ahmed GD]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
+of this software and associated documentation files, to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
@@ -49,7 +49,7 @@ furnished to do so, subject to the following conditions:
    c) Include attribution to the original Software and author
    d) Optionally indicate who made the modifications
 
-   Example: "Based on GoTween by [Author Name], modified by [Modifier Name]"
+   Example: "Based on GoTween by [Ahmed GD], modified by [Modifier Name]"
 
 3. DISCLAIMER:
 
@@ -79,7 +79,6 @@ SIMPLIFIED SUMMARY (Not legally binding - see full license above):
 
 📋 You MUST:
 - Include this license with the software
-- Give credit if used in released projects
 - Provide a link if mentioned in tutorials/videos/content
 - Indicate if you've modified the original code
 
@@ -87,24 +86,21 @@ SIMPLIFIED SUMMARY (Not legally binding - see full license above):
 
 ATTRIBUTION EXAMPLES:
 
-For Games (in credits screen):
-"GoTween Tweening Library by [Author Name]"
-
 For Tutorial Videos (in description):
 "GoTween Library: [Repository URL]
-Created by [Author Name]"
+Created by [Ahmed GD]"
 
 For Modified Versions (in header comments):
 ```
-// Based on GoTween by [Author Name]
+// Based on GoTween by [Ahmed GD]
 // Original: [Repository URL]
 // Modified by: [Your Name]
 // Modifications: [Brief description]
 ```
 
 For Documentation/README:
-"This project uses the GoTween library ([Repository URL]) created by [Author Name]."
+"This project uses the GoTween library ([Repository URL]) created by [Ahmed GD]."
 
 ---
 
-For questions about this license, please contact: [Your Contact Information]
+For questions about this license, please contact: [aag75yssar@gmail.com]
