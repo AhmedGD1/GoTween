@@ -18,6 +18,11 @@ public abstract partial class TweenBuilderBase : RefCounted, IBuilder
     public float Delay { get; protected set; }
 
     public bool Parallel { get; protected set; }
+    public bool IsRelative { get; protected set; }
+
+    public bool IsActive => ActiveTween != null && ActiveTween.IsRunning();
+
+    public Tween.TweenProcessMode ProcessMode { get; protected set; }
 
     public Action<double> UpdateCallback { get; private set; }
     public Action<int> LoopCallback { get; private set; }
@@ -45,9 +50,8 @@ public abstract partial class TweenBuilderBase : RefCounted, IBuilder
             return null;
         }
         
-        var tween = CreateTween();
+        var tween = CreateTween().SetProcessMode(ProcessMode);
         
-        // Virtual tweens return null and handle everything in Update()
         if (tween != null)
         {
             ActiveTween = tween;
@@ -105,6 +109,12 @@ public abstract partial class TweenBuilderBase : RefCounted, IBuilder
         };
     }
 
+    public TweenBuilderBase SetProcessMode(Tween.TweenProcessMode mode)
+    {
+        ProcessMode = mode;
+        return this;
+    }
+
     public TweenBuilderBase AddToGroup(string group)
     {
         Group = group;
@@ -132,6 +142,12 @@ public abstract partial class TweenBuilderBase : RefCounted, IBuilder
     public TweenBuilderBase SetParallel(bool value = true)
     {
         Parallel = value;
+        return this;
+    }
+
+    public TweenBuilderBase AsRelative()
+    {
+        IsRelative = true;
         return this;
     }
 
@@ -195,14 +211,17 @@ public abstract partial class TweenBuilderBase : RefCounted, IBuilder
     }
 
     /// <summary>
-    /// Replays the tween with current configuration.
-    /// Kills the current tween and creates a new one with updated settings.
-    /// Handles group changes properly.
+    /// Use Cancel Subs to remove all OnComplete() Connected Actions;
     /// </summary>
-    public Tween Replay()
+    /// <param name="cancelCompletedSubs"></param>
+    /// <returns></returns>
+    public Tween Replay(bool cancelCompletedSubs = false)
     {
         ActiveTween?.Kill();
         GoTween.RemoveFromAllGroups(this);
+
+        if (cancelCompletedSubs)
+            CancelCompletedSubs();
         return Start();
     }
 
@@ -223,5 +242,19 @@ public abstract partial class TweenBuilderBase : RefCounted, IBuilder
     {
         ActiveTween?.Kill();
         GoTween.ReturnToPool(this);
+    }
+
+    public static Variant AddVariants(Variant a, Variant b)
+    {
+        return a.VariantType switch
+        {
+            Variant.Type.Float => (float)a + (float)b,
+            Variant.Type.Int => (int)a + (int)b,
+            Variant.Type.Vector2 => (Vector2)a + (Vector2)b,
+            Variant.Type.Vector3 => (Vector3)a + (Vector3)b,
+            Variant.Type.Color => (Color)a + (Color)b,
+            Variant.Type.Quaternion => (Quaternion)a * (Quaternion)b,
+            _ => throw new ArgumentException($"Unsupported type for relative path tweening: {a.VariantType}")
+        };
     }
 }

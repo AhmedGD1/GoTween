@@ -166,19 +166,19 @@ public partial class GoTween
     #endregion
 
     #region Rotation Methods
-    public static TweenBuilder Rotate2D(Node node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotate(Node node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees", degrees, duration, config);
 
-    public static TweenBuilder Rotate3D(Node3D node, Vector3 euler, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotate(Node3D node, Vector3 euler, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees", euler, duration, config);
 
-    public static TweenBuilder RotateX(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateX(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees:x", degrees, duration, config);
 
-    public static TweenBuilder RotateY(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateY(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees:y", degrees, duration, config);
 
-    public static TweenBuilder RotateZ(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateZ(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees:z", degrees, duration, config);
     #endregion
 
@@ -252,9 +252,6 @@ public partial class GoTween
 
     #region Shake Effects
     
-    /// <summary>
-    /// Shakes a Node2D with decreasing intensity over duration.
-    /// </summary>
     public static VirtualBuilder<float> GoShake(Node2D node, float intensity, float duration, 
         Action<VirtualBuilder<float>> config = null)
     {
@@ -289,7 +286,7 @@ public partial class GoTween
         builder.OnComplete(() =>
         {
             if (IsInstanceValid(node))
-                node.Position = originalPos; // Reset to original
+                node.Position = originalPos;
         });
         
         config?.Invoke(builder);
@@ -297,9 +294,6 @@ public partial class GoTween
         return builder;
     }
     
-    /// <summary>
-    /// Shakes a Node3D with decreasing intensity over duration.
-    /// </summary>
     public static VirtualBuilder<float> GoShake(Node3D node, float intensity, float duration, 
         Action<VirtualBuilder<float>> config = null)
     {
@@ -339,9 +333,6 @@ public partial class GoTween
         return builder;
     }
     
-    /// <summary>
-    /// Shakes a Control node (UI).
-    /// </summary>
     public static VirtualBuilder<float> GoShake(Control control, float intensity, float duration, 
         Action<VirtualBuilder<float>> config = null)
     {

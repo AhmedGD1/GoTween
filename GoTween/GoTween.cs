@@ -104,8 +104,9 @@ public partial class GoTween : Node
         var type = builder.GetType();
         if (!pool.ContainsKey(type))
             pool[type] = new Queue<object>();
-            
-        if (pool[type].Count >= MaxPoolSize)
+        
+        var typePool = pool[type];
+        if (typePool.Count >= MaxPoolSize)
             return;
         
         pool[type].Enqueue(builder);

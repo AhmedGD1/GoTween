@@ -54,7 +54,6 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
     
     protected override bool ValidateBuilder()
     {
-        // Virtual tweens don't need a target object
         if (OnUpdateValue == null)
         {
             GD.PushError("VirtualBuilder: OnUpdate callback is required");
@@ -76,7 +75,6 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
         return true;
     }
     
-    // Don't create a Godot Tween - this is virtual!
     protected override Tween CreateTween()
     {
         currentValue = StartValue;
@@ -86,7 +84,7 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
 
         delayComplete = Delay <= 0f;
         
-        return null; // Virtual tweens don't use Godot tweens
+        return null;
     }
     
     public override void Update(double delta)
@@ -94,11 +92,10 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
         if (paused || isComplete)
             return;
         
-        base.Update(delta); // Call base for UpdateCallback
+        base.Update(delta);
         
         elapsed += (float)delta;
 
-        // Handle delay phase
         if (!delayComplete)
         {
             if (elapsed >= Delay)
@@ -109,19 +106,16 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
             return;
         }
 
-        // Animation phase (after delay)
+        if (Duration <= 0f) return;
+
         float normalizedTime = Mathf.Clamp(elapsed / Duration, 0f, 1f);
         
-        // Apply easing curve
         float easedTime = ApplyEasing(normalizedTime);
         
-        // Interpolate value
         currentValue = interpolator(StartValue, EndValue, easedTime);
         
-        // Invoke user callback
         OnUpdateValue?.Invoke(currentValue);
         
-        // Check for completion
         if (elapsed >= Duration)
         {
             HandleLoopCompletion();
@@ -134,14 +128,12 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
         
         if (Loops == 0 || currentLoop < Loops)
         {
-            // Continue looping
             elapsed = 0f;
-            delayComplete = Delay <= 0f;  // ← Reset delay for next loop
+            delayComplete = Delay <= 0f;
             LoopCallback?.Invoke(currentLoop);
         }
         else
         {
-            // Finished all loops
             isComplete = true;
             InvokeCompleted();
             GoTween.ReturnToPool(this);
@@ -159,7 +151,6 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
     {
         float curved = ApplyTransition(t);
         
-        // Then apply ease direction
         return EaseType switch
         {
             Tween.EaseType.In => curved,
@@ -193,7 +184,6 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
         };
     }
     
-    // Easing function implementations
     private float ApplyElastic(float t)
     {
         if (t == 0f || t == 1f) return t;
@@ -252,12 +242,12 @@ public partial class VirtualBuilder<T> : TweenBuilderBase, IBuilder
         elapsed = 0f;
         currentLoop = 0;
         isComplete = false;
-        delayComplete = false;  // ← Reset this too
+        delayComplete = false;
     }
     
     public override float GetTotalDuration()
     {
-        return (Duration + Delay) * Mathf.Max(1, Loops);  // ← Include delay
+        return (Duration + Delay) * Mathf.Max(1, Loops);
     }
     
     #region Fluent API - Transitions

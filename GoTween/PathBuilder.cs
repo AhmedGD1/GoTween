@@ -34,6 +34,10 @@ public partial class PathBuilder : TweenBuilderBase, IBuilder
     {
         if (InitialValue.VariantType == Variant.Type.Nil)
             InitialValue = GoTween.GetProperty(Target, Property);
+        
+        Variant finalValue = FinalValue;
+        if (IsRelative)
+            finalValue = AddVariants(InitialValue, FinalValue);
 
         var tween = GoTween.CreateNewTween();
 
@@ -41,7 +45,7 @@ public partial class PathBuilder : TweenBuilderBase, IBuilder
             tween.TweenInterval(Delay);
 
         Callable method = Callable.From<float>(t => 
-            GoTween.Interpolate(t, Target, Property, Curve, InitialValue, FinalValue));
+            GoTween.Interpolate(t, Target, Property, Curve, InitialValue, finalValue));
         
         tween.TweenMethod(method, 0f, 1f, Duration);
 
@@ -68,6 +72,18 @@ public partial class PathBuilder : TweenBuilderBase, IBuilder
     public PathBuilder SetDuration(float duration)
     {
         Duration = duration;
+        return this;
+    }
+
+    public new PathBuilder SetProcessMode(Tween.TweenProcessMode mode)
+    {
+        base.SetProcessMode(mode);
+        return this;
+    }
+
+    public new PathBuilder AsRelative()
+    {
+        base.AsRelative();
         return this;
     }
 

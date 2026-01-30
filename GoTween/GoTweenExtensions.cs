@@ -80,7 +80,7 @@ public interface IBuilder
     void AddSub(Action callback);
 
     Tween Start();
-    Tween Replay();
+    Tween Replay(bool cancelCompletedSubs = false);
     
     float GetTotalDuration();
 }

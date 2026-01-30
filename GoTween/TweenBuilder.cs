@@ -38,6 +38,12 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
 
     protected override Tween CreateTween()
     {
+        if (IsRelative && (Values.Length > 1 || Durations.Length > 1))
+        {
+            GD.PushError("Invalid As Relative usage !, To Use Relative, To() & SetDuration() Must Inculde only one 1 value");
+            return null;
+        }
+
         var tween = GoTween.CreateNewTween();
         tween.SetTrans(TransitionType).SetEase(EaseType);
 
@@ -50,7 +56,9 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
             if (!IsInstanceValid(Target))
                 return null;
 
-            var prop = tween.TweenProperty(Target, Property, Values[i], Durations[i]);
+            if (IsRelative)
+                Values[i] = AddVariants(startValue, Values[i]);
+            PropertyTweener prop = tween.TweenProperty(Target, Property, Values[i], Durations[i]);
 
             if (i == 0)
                 prop.From(startValue);
@@ -94,6 +102,18 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
     public TweenBuilder OnStep(Action<int> callback)
     {
         StepCallback = callback;
+        return this;
+    }
+
+    public new TweenBuilder SetProcessMode(Tween.TweenProcessMode mode)
+    {
+        base.SetProcessMode(mode);
+        return this;
+    }
+
+    public new TweenBuilder AsRelative()
+    {
+        base.AsRelative();
         return this;
     }
 
@@ -157,6 +177,18 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
 
         StepCallback = null;
         from = default;
+    }
+
+    public TweenBuilder SetTrans(Tween.TransitionType type)
+    {
+        TransitionType = type;
+        return this;
+    }
+
+    public TweenBuilder SetEase(Tween.EaseType type)
+    {
+        EaseType = type;
+        return this;
     }
 
     #region Transitioning
