@@ -4,14 +4,14 @@ A powerful, fluent, and performant tweening library for Godot 4 (C#). GoTween pr
 
 ## Features
 
-- 🎯 **Fluent API** - Chainable methods for clean, readable code
-- ♻️ **Object Pooling** - Automatic pooling for zero-garbage animations
-- 📦 **Sequences** - Chain multiple tweens with precise timing control
-- 🏷️ **Groups** - Organize and control tweens by category
-- 🎨 **Virtual Tweens** - Animate values without target objects
-- 🛤️ **Path Tweening** - Animate along custom curves
-- ⚡ **Sub-property Support** - Tween individual vector components (e.g., `position:x`)
-- 🎮 **Rich Helper Methods** - Pre-built methods for common animations
+-  **Fluent API** - Chainable methods for clean, readable code
+-  **Object Pooling** - Automatic pooling for zero-garbage animations
+-  **Sequences** - Chain multiple tweens with precise timing control
+-  **Groups** - Organize and control tweens by category
+-  **Virtual Tweens** - Animate values without target objects
+-  **Path Tweening** - Animate along custom curves
+-  **Sub-property Support** - Tween individual vector components (e.g., `position:x`)
+-  **Rich Helper Methods** - Pre-built methods for common animations
 
 ## Installation
 
