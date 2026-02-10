@@ -32,20 +32,29 @@ public partial class PathBuilder : TweenBuilderBase, IBuilder
 
     protected override Tween CreateTween()
     {
-        if (InitialValue.VariantType == Variant.Type.Nil)
-            InitialValue = GoTween.GetProperty(Target, Property);
-        
-        Variant finalValue = FinalValue;
-        if (IsRelative)
-            finalValue = AddVariants(InitialValue, FinalValue);
-
         var tween = GoTween.CreateNewTween();
 
         if (Delay > 0f)
             tween.TweenInterval(Delay);
 
+        bool initialValueCaptured = InitialValue.VariantType != Variant.Type.Nil;
+        Variant capturedInitialValue = InitialValue;
+        Variant capturedFinalValue = default;
+
         Callable method = Callable.From<float>(t => 
-            GoTween.Interpolate(t, Target, Property, Curve, InitialValue, finalValue));
+        {
+            if (!initialValueCaptured)
+            {
+                capturedInitialValue = GoTween.GetProperty(Target, Property);
+                capturedFinalValue = IsRelative ? AddVariants(capturedInitialValue, FinalValue) : FinalValue;
+                initialValueCaptured = true;
+            }
+            
+            Variant finalValue = capturedFinalValue.VariantType != Variant.Type.Nil ? capturedFinalValue : 
+                                 (IsRelative ? AddVariants(capturedInitialValue, FinalValue) : FinalValue);
+            
+            GoTween.Interpolate(t, Target, Property, Curve, capturedInitialValue, finalValue);
+        });
         
         tween.TweenMethod(method, 0f, 1f, Duration);
 

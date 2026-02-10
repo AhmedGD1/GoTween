@@ -14,7 +14,7 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
 
     public Action<int> StepCallback { get; private set; }
 
-    private Variant from;
+    public Variant InitialValue { get; private set; }
 
     protected override bool ValidateBuilder()
     {
@@ -47,30 +47,41 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
         var tween = GoTween.CreateNewTween();
         tween.SetTrans(TransitionType).SetEase(EaseType);
 
-        Variant startValue = from.VariantType != Variant.Type.Nil ? from : GoTween.GetProperty(Target, Property);
         if (Delay > 0f)
             tween.TweenInterval(Delay);
 
+        if (IsRelative)
+        {
+            tween.TweenProperty(Target, Property, Values[0], Durations[0]).AsRelative();
+            return tween;
+        }
+
+        bool shouldCaptureNow = Delay <= 0f || InitialValue.VariantType != Variant.Type.Nil;
+        Variant startValue = default;
+        
+        if (shouldCaptureNow)
+        {
+            startValue = InitialValue.VariantType != Variant.Type.Nil ? InitialValue : GoTween.GetProperty(Target, Property);
+        }
+
         for (int i = 0; i < Values.Length; i++)
         {
-            if (!IsInstanceValid(Target))
-                return null;
-
-            if (IsRelative)
-                Values[i] = AddVariants(startValue, Values[i]);
             PropertyTweener prop = tween.TweenProperty(Target, Property, Values[i], Durations[i]);
 
             if (i == 0)
-                prop.From(startValue);
+            {
+                if (shouldCaptureNow)
+                    prop.From(startValue);
+            }
             else
+            {
                 prop.From(Values[i - 1]);
+            }
         }
 
         if (StepCallback != null)
-        {
             tween.StepFinished += step => StepCallback.Invoke((int)step);
-        }
-
+        
         return tween;
     }
 
@@ -83,7 +94,7 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
 
     public TweenBuilder From(Variant value)
     {
-        from = value;
+        InitialValue = value;
         return this;
     }
 
@@ -176,7 +187,7 @@ public partial class TweenBuilder : TweenBuilderBase, IBuilder
         EaseType = Tween.EaseType.In;
 
         StepCallback = null;
-        from = default;
+        InitialValue = default;
     }
 
     public TweenBuilder SetTrans(Tween.TransitionType type)

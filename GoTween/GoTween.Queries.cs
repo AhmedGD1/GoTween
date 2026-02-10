@@ -225,6 +225,11 @@ public partial class GoTween
         Config(camera, "fov", degrees, duration, config);
     #endregion
 
+    #region Range Methods
+    public static TweenBuilder GoRange(Godot.Range range, float value, float duration, Action<TweenBuilder> config = null) =>
+        Config(range, "value", value, duration, config);
+    #endregion
+
     #region UI Patterns
     public static TweenBuilder GoSlideIn(Control control, Direction from, float duration)
     {
