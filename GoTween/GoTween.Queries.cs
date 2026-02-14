@@ -1,7 +1,7 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace GoTweening;
 
@@ -134,52 +134,97 @@ public partial class GoTween
     #endregion
 
     #region Scale Methods
-    public static TweenBuilder GoScale(Node2D node, Vector2 value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocal(Node2D node, Vector2 value, float duration, Action<TweenBuilder> config = null) => 
         Config(node, "scale", value, duration, config);
 
-    public static TweenBuilder GoScale(Control node, Vector2 value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocal(Control node, Vector2 value, float duration, Action<TweenBuilder> config = null) => 
         Config(node, "scale", value, duration, config);
 
-    public static TweenBuilder GoScale(Node3D node, Vector3 value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocal(Node3D node, Vector3 value, float duration, Action<TweenBuilder> config = null) => 
         Config(node, "scale", value, duration, config);
 
-    public static TweenBuilder GoScaleX(Node2D node, float value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocalX(Node2D node, float value, float duration, Action<TweenBuilder> config = null) => 
         Config(node, "scale:x", value, duration, config);
 
-    public static TweenBuilder GoScaleX(Control control, float value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocalX(Control control, float value, float duration, Action<TweenBuilder> config = null) => 
         Config(control, "scale:x", value, duration, config);
 
-    public static TweenBuilder GoScaleX(Node3D node, float value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocalX(Node3D node, float value, float duration, Action<TweenBuilder> config = null) => 
         Config(node, "scale:x", value, duration, config);
     
-    public static TweenBuilder GoScaleY(Node2D node, float value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocalY(Node2D node, float value, float duration, Action<TweenBuilder> config = null) => 
         Config(node, "scale:y", value, duration, config);
     
-    public static TweenBuilder GoScaleY(Control control, float value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocalY(Control control, float value, float duration, Action<TweenBuilder> config = null) => 
         Config(control, "scale:y", value, duration, config);
 
-    public static TweenBuilder GoScaleY(Node3D node, float value, float duration, Action<TweenBuilder> config = null) => 
+    public static TweenBuilder GoScaleLocalY(Node3D node, float value, float duration, Action<TweenBuilder> config = null) => 
         Config(node, "scale:y", value, duration, config);
 
-    public static TweenBuilder GoScaleZ(Node3D node, float value, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoScaleLocalZ(Node3D node, float value, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "scale:z", value, duration, config);
+
+    public static TweenBuilder GoScale(Node2D node, Vector2 value, float duration, Action<TweenBuilder> config = null) => 
+        Config(node, "global_scale", value, duration, config);
+
+    public static TweenBuilder GoScale(Control node, Vector2 value, float duration, Action<TweenBuilder> config = null) => 
+        Config(node, "global_scale", value, duration, config);
+
+    public static TweenBuilder GoScale(Node3D node, Vector3 value, float duration, Action<TweenBuilder> config = null) => 
+        Config(node, "global_scale", value, duration, config);
+
+    public static TweenBuilder GoScaleX(Node2D node, float value, float duration, Action<TweenBuilder> config = null) => 
+        Config(node, "global_scale:x", value, duration, config);
+
+    public static TweenBuilder GoScaleX(Control control, float value, float duration, Action<TweenBuilder> config = null) => 
+        Config(control, "global_scale:x", value, duration, config);
+
+    public static TweenBuilder GoScaleX(Node3D node, float value, float duration, Action<TweenBuilder> config = null) => 
+        Config(node, "global_scale:x", value, duration, config);
+    
+    public static TweenBuilder GoScaleY(Node2D node, float value, float duration, Action<TweenBuilder> config = null) => 
+        Config(node, "global_scale:y", value, duration, config);
+    
+    public static TweenBuilder GoScaleY(Control control, float value, float duration, Action<TweenBuilder> config = null) => 
+        Config(control, "global_scale:y", value, duration, config);
+
+    public static TweenBuilder GoScaleY(Node3D node, float value, float duration, Action<TweenBuilder> config = null) => 
+        Config(node, "global_scale:y", value, duration, config);
+
+    public static TweenBuilder GoScaleZ(Node3D node, float value, float duration, Action<TweenBuilder> config = null) =>
+        Config(node, "global_scale:z", value, duration, config);
     #endregion
 
     #region Rotation Methods
-    public static TweenBuilder GoRotate(Node node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateLocal(Node node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees", degrees, duration, config);
 
-    public static TweenBuilder GoRotate(Node3D node, Vector3 euler, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateLocal(Node3D node, Vector3 euler, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees", euler, duration, config);
 
-    public static TweenBuilder GoRotateX(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateLocalX(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees:x", degrees, duration, config);
 
-    public static TweenBuilder GoRotateY(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateLocalY(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees:y", degrees, duration, config);
 
-    public static TweenBuilder GoRotateZ(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+    public static TweenBuilder GoRotateLocalZ(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
         Config(node, "rotation_degrees:z", degrees, duration, config);
+
+    public static TweenBuilder GoRotate(Node node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+        Config(node, "global_rotation_degrees", degrees, duration, config);
+
+    public static TweenBuilder GoRotate(Node3D node, Vector3 euler, float duration, Action<TweenBuilder> config = null) =>
+        Config(node, "global_rotation_degrees", euler, duration, config);
+
+    public static TweenBuilder GoRotateX(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+        Config(node, "global_rotation_degrees:x", degrees, duration, config);
+
+    public static TweenBuilder GoRotateY(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+        Config(node, "global_rotation_degrees:y", degrees, duration, config);
+
+    public static TweenBuilder GoRotateZ(Node3D node, float degrees, float duration, Action<TweenBuilder> config = null) =>
+        Config(node, "global_rotation_degrees:z", degrees, duration, config);
     #endregion
 
     #region Color Methods
