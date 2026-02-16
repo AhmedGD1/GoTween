@@ -44,27 +44,17 @@ public partial class PathBuilder : TweenBuilder, IBuilder
         if (Delay > 0f)
             tween.TweenInterval(Delay);
 
-        if (LoopMode == LoopType.PingPong)
-        {
-            for (int i = 0; i < Loops; i++)
-            {
-                Callable forwardMethod = Callable.From<float>(t => 
-                    GoTween.Interpolate(t, Target, Property, Curve, InitialValue, finalValue));
-                tween.TweenMethod(forwardMethod, 0f, 1f, Duration);
-                
-                Callable backwardMethod = Callable.From<float>(t => 
-                    GoTween.Interpolate(t, Target, Property, Curve, finalValue, InitialValue));
-                tween.TweenMethod(backwardMethod, 0f, 1f, Duration);
-            }
-
-            tween.SetLoops(1);
-            return tween;
-        }
-
         Callable method = Callable.From<float>(t => 
             GoTween.Interpolate(t, Target, Property, Curve, InitialValue, finalValue));
         
         tween.TweenMethod(method, 0f, 1f, Duration);
+
+        if (LoopMode == LoopType.PingPong)
+        {
+            Callable backwardMethod = Callable.From<float>(t => 
+                GoTween.Interpolate(t, Target, Property, Curve, finalValue, InitialValue));
+            tween.TweenMethod(backwardMethod, 0f, 1f, Duration);
+        }
 
         return tween;
     }
