@@ -1,3 +1,5 @@
+<img width="1536" height="1024" alt="GoTweenLogo" src="https://github.com/user-attachments/assets/f8f844e2-6dee-48c6-8c69-7ff2b621b57b" />
+
 # GoTween
 
 A powerful and easy-to-use tweening library for Godot 4 with C#. GoTween makes it simple to add smooth animations to your game with minimal code.
@@ -162,6 +164,8 @@ sprite.GoProperty("modulate:r").To(0f).SetDuration(0.5f).Start();
 ---
 
 ## Path Tweening
+
+<img width="299" height="304" alt="curve" src="https://github.com/user-attachments/assets/b5c4497d-f9a1-4f0b-81c7-c6c0b631c226" />
 
 Path tweening lets you create custom motion using Godot's `Curve` resource. This is perfect for creating unique, non-linear animations that standard easing functions can't achieve.
 
