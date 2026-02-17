@@ -287,5 +287,33 @@ public abstract partial class TweenBuilder : RefCounted, IBuilder
         ActiveTween?.Kill();
         GoTween.ReturnToPool(this);
     }
+
+    public virtual float GetProgress()
+    {
+        if (!IsInstanceValid(ActiveTween) || !ActiveTween.IsValid())
+            return 0f;
+        
+        float elapsed = (float)ActiveTween.GetTotalElapsedTime();
+        float total = GetTotalDuration();
+
+        return total > 0f ? Mathf.Clamp(elapsed / total, 0f, 1f) : 0f;
+    }
+
+    public virtual float GetElapsedTime()
+    {
+        return ActiveTween != null ? (float)ActiveTween.GetTotalElapsedTime() : 0f;
+    }
+
+    public virtual float GetRemainingTime()
+    {
+        if (ActiveTween == null || !ActiveTween.IsValid())
+            return 0f;
+        
+        float elapsed = (float)ActiveTween.GetTotalElapsedTime();
+        float total = GetTotalDuration();
+        
+        return Mathf.Max(0f, total - elapsed);
+    }
+
 }
 

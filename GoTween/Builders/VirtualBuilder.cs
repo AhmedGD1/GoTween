@@ -94,7 +94,7 @@ public partial class VirtualBuilder<T> : TweenBuilder, IBuilder
         
         base.Update(delta);
         
-        elapsed += (float)delta;
+        elapsed += (float)delta * SpeedScale;
 
         if (!delayComplete)
         {
@@ -245,11 +245,6 @@ public partial class VirtualBuilder<T> : TweenBuilder, IBuilder
         delayComplete = false;
     }
     
-    public override float GetTotalDuration()
-    {
-        return (Duration + Delay) * Mathf.Max(1, Loops);
-    }
-    
     #region Fluent API - Transitions
     public VirtualBuilder<T> Linear()
     {
@@ -397,6 +392,51 @@ public partial class VirtualBuilder<T> : TweenBuilder, IBuilder
     {
         base.OnUpdate(method);
         return this;
+    }
+
+    public override float GetTotalDuration()
+    {
+        return (Duration + Delay) * Mathf.Max(1, Loops);
+    }
+
+    public override float GetProgress()
+    {
+        if (Duration <= 0f) 
+            return 0f;
+        
+        float totalDuration = GetTotalDuration();
+        
+        if (Loops == 0)
+        {
+            float cycleTime = Duration + Delay;
+            float currentCycleElapsed = delayComplete 
+                ? Delay + elapsed 
+                : elapsed;
+            float loopProgress = (currentCycleElapsed % cycleTime) / cycleTime;
+            return Mathf.Clamp(loopProgress, 0f, 1f);
+        }
+        
+        float totalElapsed = (currentLoop * (Duration + Delay)) + 
+                             (delayComplete ? Delay + elapsed : elapsed);
+        return Mathf.Clamp(totalElapsed / totalDuration, 0f, 1f);
+    }
+
+    public override float GetElapsedTime()
+    {
+        float totalElapsed = (currentLoop * (Duration + Delay)) + 
+                             (delayComplete ? Delay + elapsed : elapsed);
+        return totalElapsed;
+    }
+
+    public override float GetRemainingTime()
+    {
+        if (Loops == 0)
+            return float.PositiveInfinity;
+        
+        float totalDuration = GetTotalDuration();
+        float totalElapsed = GetElapsedTime();
+        
+        return Mathf.Max(0f, totalDuration - totalElapsed);
     }
     #endregion
 }

@@ -61,7 +61,15 @@ public partial class PathBuilder : TweenBuilder, IBuilder
 
     public override float GetTotalDuration()
     {
-        return Duration;
+        float singleLoopDuration = Duration;
+        
+        if (LoopMode == LoopType.PingPong)
+            singleLoopDuration *= 2;
+        
+        if (Loops == 0 || Loops == 1)
+            return singleLoopDuration;
+        
+        return singleLoopDuration * Loops;
     }
 
     public PathBuilder From(Variant value)

@@ -106,7 +106,16 @@ public partial class PropertyBuilder : TweenBuilder, IBuilder
     {
         if (Durations == null || Durations.Length == 0)
             return 0f;
-        return Durations.Sum();
+        
+        float singleLoopDuration = Durations.Sum();
+        
+        if (LoopMode == LoopType.PingPong)
+            singleLoopDuration *= 2;
+        
+        if (Loops == 0 || Loops == 1)
+            return singleLoopDuration;
+        
+        return singleLoopDuration * Loops;
     }
 
     public PropertyBuilder From(Variant value)
