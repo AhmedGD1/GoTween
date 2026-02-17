@@ -3,7 +3,7 @@ using System;
 
 namespace GoTweening;
 
-public class Virtual
+public class GoVirtual
 {
     public static VirtualBuilder<float> Float(float from, float to, float duration, Action<float> onUpdate) =>
         Create(from, to, duration, Mathf.Lerp, onUpdate);
