@@ -161,6 +161,20 @@ public partial class GoTween
 
     public static PropertyBuilder GoMoveLocalZ(Node3D node, float to, float duration, Action<PropertyBuilder> config = null) => 
         Config(node, "position:z", to, duration, config);
+
+    public static PropertyBuilder GoMoveAtSpeed(Node2D node, Vector2 to, float speed, Action<PropertyBuilder> config = null)
+    {
+        float distance = node.GlobalPosition.DistanceTo(to);
+        float duration = distance / speed;
+        return GoMove(node, to, duration, config);
+    }
+
+    public static PropertyBuilder GoMoveAtSpeed(Node3D node, Vector3 to, float speed, Action<PropertyBuilder> config = null)
+    {
+        float distance = node.GlobalPosition.DistanceTo(to);
+        float duration = distance / speed;
+        return GoMove(node, to, duration, config);
+    }
     #endregion
 
     #region Scale Methods
@@ -298,7 +312,7 @@ public partial class GoTween
         
         var originalPos = node.Position;
         
-        var builder = Virtual.Create(
+        var builder = GoVirtual.Create(
             0f,
             1f,
             duration,
@@ -338,7 +352,7 @@ public partial class GoTween
         
         var originalPos = node.Position;
         
-        var builder = Virtual.Create(
+        var builder = GoVirtual.Create(
             0f, 1f, duration,
             (a, b, t) => t,
             progress =>
@@ -377,7 +391,7 @@ public partial class GoTween
         
         var originalPos = control.Position;
         
-        var builder = Virtual.Create(
+        var builder = GoVirtual.Create(
             0f, 1f, duration,
             (a, b, t) => t,
             progress =>
@@ -415,7 +429,7 @@ public partial class GoTween
         
         var originalRot = node.Rotation;
         
-        var builder = Virtual.Create(
+        var builder = GoVirtual.Create(
             0f, 1f, duration,
             (a, b, t) => t,
             progress =>
@@ -673,7 +687,7 @@ public partial class GoTween
     #region Blink
     public static VirtualBuilder<int> GoBlink(CanvasItem item, int times, float duration)
     {
-        return Virtual.Int(0, times, duration, current =>
+        return GoVirtual.Int(0, times, duration, current =>
         {
             if (IsInstanceValid(item))
                 item.Visible = current % 2 == 0;

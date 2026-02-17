@@ -83,4 +83,8 @@ public interface IBuilder
     Tween Replay(bool cancelCompletedSubs = false);
     
     float GetTotalDuration();
+    float GetProgress();
+    float GetElapsedTime();
+    float GetRemainingTime();
 }
+
