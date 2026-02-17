@@ -245,104 +245,40 @@ public partial class VirtualBuilder<T> : TweenBuilder, IBuilder
         delayComplete = false;
     }
     
-    #region Fluent API - Transitions
-    public VirtualBuilder<T> Linear()
+    #region Transition & Easing
+    public VirtualBuilder<T> SetTrans(Tween.TransitionType transition)
     {
-        TransitionType = Tween.TransitionType.Linear;
-        return this;
+        TransitionType = transition;
+        return this; 
     }
-    
-    public VirtualBuilder<T> Sine()
+
+    public VirtualBuilder<T> SetEase(Tween.EaseType easeType)
     {
-        TransitionType = Tween.TransitionType.Sine;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Quad()
-    {
-        TransitionType = Tween.TransitionType.Quad;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Cubic()
-    {
-        TransitionType = Tween.TransitionType.Cubic;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Quart()
-    {
-        TransitionType = Tween.TransitionType.Quart;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Quint()
-    {
-        TransitionType = Tween.TransitionType.Quint;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Expo()
-    {
-        TransitionType = Tween.TransitionType.Expo;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Circ()
-    {
-        TransitionType = Tween.TransitionType.Circ;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Elastic()
-    {
-        TransitionType = Tween.TransitionType.Elastic;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Back()
-    {
-        TransitionType = Tween.TransitionType.Back;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Bounce()
-    {
-        TransitionType = Tween.TransitionType.Bounce;
-        return this;
-    }
-    
-    public VirtualBuilder<T> Spring()
-    {
-        TransitionType = Tween.TransitionType.Spring;
+        EaseType = easeType;
         return this;
     }
     #endregion
+
+    #region Fluent API - Transitions
+    public VirtualBuilder<T> Linear() => SetTrans(Tween.TransitionType.Linear);
+    public VirtualBuilder<T> Sine() => SetTrans(Tween.TransitionType.Sine);
+    public VirtualBuilder<T> Quad() => SetTrans(Tween.TransitionType.Quad);
+    public VirtualBuilder<T> Cubic() => SetTrans(Tween.TransitionType.Cubic);
+    public VirtualBuilder<T> Quart() => SetTrans(Tween.TransitionType.Quart);
+    public VirtualBuilder<T> Quint() => SetTrans(Tween.TransitionType.Quint);
+    public VirtualBuilder<T> Expo() => SetTrans(Tween.TransitionType.Expo);
+    public VirtualBuilder<T> Circ() => SetTrans(Tween.TransitionType.Circ);
+    public VirtualBuilder<T> Elastic() => SetTrans(Tween.TransitionType.Elastic);
+    public VirtualBuilder<T> Back() => SetTrans(Tween.TransitionType.Back);
+    public VirtualBuilder<T> Bounce() => SetTrans(Tween.TransitionType.Bounce);
+    public VirtualBuilder<T> Spring() => SetTrans(Tween.TransitionType.Spring);
+    #endregion
     
     #region Fluent API - Easing
-    public VirtualBuilder<T> EaseIn()
-    {
-        EaseType = Tween.EaseType.In;
-        return this;
-    }
-    
-    public VirtualBuilder<T> EaseOut()
-    {
-        EaseType = Tween.EaseType.Out;
-        return this;
-    }
-    
-    public VirtualBuilder<T> EaseInOut()
-    {
-        EaseType = Tween.EaseType.InOut;
-        return this;
-    }
-    
-    public VirtualBuilder<T> EaseOutIn()
-    {
-        EaseType = Tween.EaseType.OutIn;
-        return this;
-    }
+    public VirtualBuilder<T> EaseIn() => SetEase(Tween.EaseType.In);
+    public VirtualBuilder<T> EaseOut() => SetEase(Tween.EaseType.Out);
+    public VirtualBuilder<T> EaseInOut() => SetEase(Tween.EaseType.InOut);
+    public VirtualBuilder<T> EaseOutIn() => SetEase(Tween.EaseType.OutIn);
     #endregion
     
     #region Fluent API - Base Method Overrides

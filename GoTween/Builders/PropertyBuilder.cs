@@ -247,91 +247,74 @@ public partial class PropertyBuilder : TweenBuilder, IBuilder
     }
 
     #region Transitioning
-    public PropertyBuilder Back()
-    {
-        TransitionType = Tween.TransitionType.Back;
-        return this;
-    }
-    public PropertyBuilder Bounce()
-    {
-        TransitionType = Tween.TransitionType.Bounce;
-        return this;
-    }
-    public PropertyBuilder Circ()
-    {
-        TransitionType = Tween.TransitionType.Circ;
-        return this;
-    }
-    public PropertyBuilder Cubic()
-    {
-        TransitionType = Tween.TransitionType.Cubic;
-        return this;
-    }
-    public PropertyBuilder Elastic()
-    {
-        TransitionType = Tween.TransitionType.Elastic;
-        return this;
-    }
-    public PropertyBuilder Expo()
-    {
-        TransitionType = Tween.TransitionType.Expo;
-        return this;
-    }
-    public PropertyBuilder Linear()
-    {
-        TransitionType = Tween.TransitionType.Linear;
-        return this;
-    }
-    public PropertyBuilder Quad()
-    {
-        TransitionType = Tween.TransitionType.Quad;
-        return this;
-    }
-    public PropertyBuilder Quart()
-    {
-        TransitionType = Tween.TransitionType.Quart;
-        return this;
-    }
-    public PropertyBuilder Quint()
-    {
-        TransitionType = Tween.TransitionType.Quint;
-        return this;
-    }
-    public PropertyBuilder Sine()
-    {
-        TransitionType = Tween.TransitionType.Sine;
-        return this;
-    }
-    public PropertyBuilder Spring()
-    {
-        TransitionType = Tween.TransitionType.Spring;
-        return this;
-    }
+    public PropertyBuilder Back() => SetTrans(Tween.TransitionType.Back);
+    public PropertyBuilder Bounce() => SetTrans(Tween.TransitionType.Bounce);
+    public PropertyBuilder Circ() => SetTrans(Tween.TransitionType.Circ);
+    public PropertyBuilder Cubic() => SetTrans(Tween.TransitionType.Cubic);
+    public PropertyBuilder Elastic() => SetTrans(Tween.TransitionType.Elastic);
+    public PropertyBuilder Expo() => SetTrans(Tween.TransitionType.Expo);
+    public PropertyBuilder Linear() => SetTrans(Tween.TransitionType.Linear);
+    public PropertyBuilder Quad() => SetTrans(Tween.TransitionType.Quad);
+    public PropertyBuilder Quart() => SetTrans(Tween.TransitionType.Quart);
+    public PropertyBuilder Quint() => SetTrans(Tween.TransitionType.Quint);
+    public PropertyBuilder Sine() => SetTrans(Tween.TransitionType.Sine);
+    public PropertyBuilder Spring() => SetTrans(Tween.TransitionType.Spring);
     #endregion
 
     #region Easing
-    public PropertyBuilder EaseIn()
-    {
-        EaseType = Tween.EaseType.In;
-        return this;
-    }
+    public PropertyBuilder EaseIn() => SetEase(Tween.EaseType.In);
+    public PropertyBuilder EaseOut() => SetEase(Tween.EaseType.Out);
+    public PropertyBuilder EaseInOut() => SetEase(Tween.EaseType.InOut);
+    public PropertyBuilder EaseOutIn() => SetEase(Tween.EaseType.OutIn);
+    #endregion
 
-    public PropertyBuilder EaseOut()
-    {
-        EaseType = Tween.EaseType.Out;
-        return this;
-    }
+    #region Combo
+    /// <summary>Gentle acceleration and deceleration. The most neutral "feels good" motion.</summary>
+    /// <remarks>Sine + EaseInOut</remarks>
+    public PropertyBuilder Smooth() => Sine().EaseInOut();
 
-    public PropertyBuilder EaseInOut()
-    {
-        EaseType = Tween.EaseType.InOut;
-        return this;
-    }
+    /// <summary>Starts with momentum and gradually slows to a stop. Good for things floating or sliding into place.</summary>
+    /// <remarks>Sine + EaseOut</remarks>
+    public PropertyBuilder Drift() => Sine().EaseOut();
 
-    public PropertyBuilder EaseOutIn()
-    {
-        EaseType = Tween.EaseType.OutIn;
-        return this;
-    }
+    /// <summary>Heavier, more cinematic ease in and out. Good for large objects or dramatic transitions.</summary>
+    /// <remarks>Quart + EaseInOut</remarks>
+    public PropertyBuilder Glide() => Quart().EaseInOut();
+
+
+    /// <summary>Physically bounces on arrival like a rubber ball hitting the floor. Good for playful UI or collectibles.</summary>
+    /// <remarks>Bounce + EaseOut</remarks>
+    public PropertyBuilder Boing() => Bounce().EaseOut();
+
+    /// <summary>Stretches and wobbles in both directions before settling. Good for jelly-like objects or playful emphasis.</summary>
+    /// <remarks>Elastic + EaseInOut</remarks>
+    public PropertyBuilder Wobble() => Elastic().EaseInOut();
+
+
+    /// <summary>Instant-feeling start that decelerates sharply. The go-to for responsive UI like buttons and popups.</summary>
+    /// <remarks>Expo + EaseOut</remarks>
+    public PropertyBuilder Snappy() => Expo().EaseOut();
+
+    /// <summary>Smooth ramp up then snaps to the end. Good for panels or drawers sliding in.</summary>
+    /// <remarks>Expo + EaseInOut</remarks>
+    public PropertyBuilder FadeSnap() => Expo().EaseInOut();
+
+    /// <summary>Overshoots the target slightly then snaps back. Great for elements appearing on screen.</summary>
+    /// <remarks>Back + EaseOut</remarks>
+    public PropertyBuilder Pop() => Back().EaseOut();
+
+    /// <summary>Overshoots dramatically and oscillates before settling. Good for hit reactions or emphasis.</summary>
+    /// <remarks>Elastic + EaseOut</remarks>
+    public PropertyBuilder Punch() => Elastic().EaseOut();
+
+
+    /// <summary>Decelerates like a vehicle coming to a stop. Good for cameras, heavy objects, or anything with physical weight.</summary>
+    /// <remarks>Cubic + EaseOut</remarks>
+    public PropertyBuilder Brake() => Cubic().EaseOut();
+
+    /// <summary>Winds up slightly backward before launching forward. Good for characters or objects about to move.</summary>
+    /// <remarks>Back + EaseIn</remarks>
+    public PropertyBuilder Anticipate() => Back().EaseIn();
     #endregion
 }
+
